@@ -559,6 +559,9 @@ func (o *CheckpointOpts) args() (out []string) {
 	if o.AllowExternalUnixSockets {
 		out = append(out, "--ext-unix-sk")
 	}
+	if o.SkipInflightTCP{
+		out = append(out, "--skip-in-flight")
+	}
 	if o.AllowTerminal {
 		out = append(out, "--shell-job")
 	}
