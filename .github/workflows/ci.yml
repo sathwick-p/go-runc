@@ -15,28 +15,28 @@ jobs:
 
     strategy:
       matrix:
-        go-version: [1.20.x]
-        os: [ubuntu-22.04]
+        go-version: [ 1.20.x ]
+        os: [ ubuntu-22.04 ]
 
     steps:
-      - uses: actions/setup-go@v3
-        with:
-          go-version: ${{ matrix.go-version }}
+    - uses: actions/setup-go@v3
+      with:
+        go-version: ${{ matrix.go-version }}
 
-      - name: Set env
-        shell: bash
-        run: |
-          echo "GOPATH=${{ github.workspace }}" >> $GITHUB_ENV
-          echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
+    - name: Set env
+      shell: bash
+      run: |
+        echo "GOPATH=${{ github.workspace }}" >> $GITHUB_ENV
+        echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
 
-      - uses: actions/checkout@v3
-        with:
-          path: src/github.com/containerd/go-runc
-          fetch-depth: 25
+    - uses: actions/checkout@v3
+      with:
+        path: src/github.com/containerd/go-runc
+        fetch-depth: 25
 
-      - uses: containerd/project-checks@v1.1.0
-        with:
-          working-directory: src/github.com/containerd/go-runc
+    - uses: containerd/project-checks@v1.2.0
+      with:
+        working-directory: src/github.com/containerd/go-runc
 
   linters:
     name: Linters
@@ -45,29 +45,29 @@ jobs:
 
     strategy:
       matrix:
-        go-version: [1.20.x]
-        os: [ubuntu-22.04]
+        go-version: [ 1.20.x ]
+        os: [ ubuntu-22.04 ]
 
     steps:
-      - uses: actions/setup-go@v3
-        with:
-          go-version: ${{ matrix.go-version }}
+    - uses: actions/setup-go@v3
+      with:
+        go-version: ${{ matrix.go-version }}
 
-      - uses: actions/checkout@v3
-        with:
-          path: src/github.com/containerd/go-runc
+    - uses: actions/checkout@v3
+      with:
+        path: src/github.com/containerd/go-runc
 
-      - name: Set env
-        shell: bash
-        run: |
-          echo "GOPATH=${{ github.workspace }}" >> $GITHUB_ENV
-          echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
+    - name: Set env
+      shell: bash
+      run: |
+        echo "GOPATH=${{ github.workspace }}" >> $GITHUB_ENV
+        echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
 
-      - uses: golangci/golangci-lint-action@v3
-        with:
-          version: v1.51.1
-          working-directory: src/github.com/containerd/go-runc
-          args: --timeout=5m
+    - uses: golangci/golangci-lint-action@v3
+      with:
+        version: v1.51.1
+        working-directory: src/github.com/containerd/go-runc
+        args: --timeout=5m
 
   tests:
     name: Tests
@@ -76,25 +76,25 @@ jobs:
 
     strategy:
       matrix:
-        go-version: [1.18.x, 1.19.x, 1.20.x]
-        os: [ubuntu-22.04]
+        go-version: [ 1.18.x, 1.19.x, 1.20.x ]
+        os: [ ubuntu-22.04 ]
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          path: src/github.com/containerd/go-runc
+    - uses: actions/checkout@v3
+      with:
+        path: src/github.com/containerd/go-runc
 
-      - uses: actions/setup-go@v3
-        with:
-          go-version: ${{ matrix.go-version }}
+    - uses: actions/setup-go@v3
+      with:
+        go-version: ${{ matrix.go-version }}
 
-      - name: Set env
-        shell: bash
-        run: |
-          echo "GOPATH=${{ github.workspace }}" >> $GITHUB_ENV
-          echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
+    - name: Set env
+      shell: bash
+      run: |
+        echo "GOPATH=${{ github.workspace }}" >> $GITHUB_ENV
+        echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
 
-      - run: |
-          go test -v -race -covermode=atomic -coverprofile=coverage.txt ./...
-          bash <(curl -s https://codecov.io/bash)
-        working-directory: src/github.com/containerd/go-runc
+    - run: |
+        go test -v -race -covermode=atomic -coverprofile=coverage.txt ./...
+        bash <(curl -s https://codecov.io/bash)
+      working-directory: src/github.com/containerd/go-runc
