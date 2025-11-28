@@ -509,7 +509,7 @@ type CheckpointOpts struct {
 	ParentPath string
 	// AllowOpenTCP allows open tcp connections to be checkpointed
 	AllowOpenTCP bool
-	// SkipInflightTCP allows you to skip not yet completely established TCP connections
+	// SkipInflightTCP allows you to skip not yet completely established TCP connections before checkpointing
 	SkipInflightTCP bool
 	// AllowExternalUnixSockets allows external unix sockets to be checkpointed
 	AllowExternalUnixSockets bool
